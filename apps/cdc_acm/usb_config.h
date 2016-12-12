@@ -59,7 +59,11 @@
 /* Comment the following line to use polling USB operation. When using polling,
    You are responsible for calling usb_service() periodically from your
    application. */
+// changed by FMMT666(ASkr)
+#ifndef _18F14K50
 #define USB_USE_INTERRUPTS
+#endif
+
 
 /* Uncomment if you have a composite device which has multiple different types
  * of device classes. For example a device which has HID+CDC or
