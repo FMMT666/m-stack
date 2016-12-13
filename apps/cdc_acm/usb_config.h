@@ -59,7 +59,7 @@
 /* Comment the following line to use polling USB operation. When using polling,
    You are responsible for calling usb_service() periodically from your
    application. */
-// changed by FMMT666(ASkr)
+// changed by FMMT666(ASkr); TODO: INTs don't work yet (needs investigation)
 #ifndef _18F14K50
 #define USB_USE_INTERRUPTS
 #endif

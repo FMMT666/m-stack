@@ -573,25 +573,34 @@ void usb_init(void)
 	SFR_USB_INTERRUPT_EN = 0x0;
 	SFR_USB_EXTENDED_INTERRUPT_EN = 0x0;
 	
-	SFR_USB_EN = 1; /* enable USB module */
+// changed by FMMT666(ASkr); Doesn't work for a 18F14K50, moved down... (1/3)
+
+#ifndef _1	SFR_USB_EN = 1; /* enable USB module */;
+  
+#endif
 
 #ifdef USE_OTG
 	SFR_OTGEN = 1;
 #endif
-
-	
+  
+// changed by FMMT666(ASkr); Doesn't work for a 18F14K50, moved down... (2/3)
+#ifndef _18F14K50
 #ifdef NEEDS_PULL
 	SFR_PULL_EN = 1;  /* pull-up enable */
 #endif
-
+#endif
+  
 #ifdef HAS_ON_CHIP_XCVR_DIS
 	SFR_ON_CHIP_XCVR_DIS = 0; /* on-chip transceiver Disable */
 #endif
 
+// changed by FMMT666(ASkr); Doesn't work for a 18F14K50, moved down... (3/3)
+#ifndef _18F14K50
 #ifdef HAS_LOW_SPEED
 	SFR_FULL_SPEED_EN = 1;   /* Full-speed enable */
 #endif
-
+#endif
+  
 	CLEAR_USB_TOKEN_IF();   /* Clear 4 times to clear out USTAT FIFO */
 	CLEAR_USB_TOKEN_IF();
 	CLEAR_USB_TOKEN_IF();
@@ -682,6 +691,27 @@ void usb_init(void)
 
 	reset_ep0_data_stage();
 
+// added by FMMT666(ASkr); moved from above and rearranged
+#ifdef _18F14K50
+
+  // comment by FMMT666(ASkr)
+  // As it seems, the only way to successfully enable one of
+  // the internal pull-ups, is to set FSEN (LS/HS selection) and
+  // UPUEN (pull-up D-/D+) shortly before the USB module is enabled
+  // _AND_ do all of this at the end of this routine.
+  // For whatever reason, it does not work any other way...
+  // (I did _not_ test this sequence with an external pull-up.)
+  
+  FSEN  = 1;
+  
+#ifdef NEEDS_PULL
+  UPUEN = 1;
+#endif
+  
+  USBEN = 1;
+    
+#endif
+  
 #ifdef USB_USE_INTERRUPTS
 	SFR_USB_IE = 1;     /* USB Interrupt enable */
 #endif

@@ -1,4 +1,10 @@
 
+CHANGES BY FMMT666(ASkr):
+  * added PIC18F14K50
+  * added PIC18F14K50 in CDC 
+
+---
+
    M-Stack: Free USB Stack for PIC 16F, 18F, 24F, and 32MX Microcontrollers
   ==========================================================================
 
