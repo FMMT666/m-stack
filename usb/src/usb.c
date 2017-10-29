@@ -1419,7 +1419,7 @@ static inline void handle_ep0_in()
 				ep0_data_stage_callback(1/*true*/, ep0_data_stage_context);
 			reset_ep0_data_stage();
 		}
-	}
+	}  
 }
 
 /* checkUSB() is called repeatedly to check for USB interrupts
